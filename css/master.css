@@ -1,0 +1,19 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  flex:1;
+}
+
+/*Make up some class that highlights the computer's pick*/
+.highlight {
+  background: yellow;
+}
+
+.provider {
+  height: 140px;
+}
