@@ -1,8 +1,61 @@
-//Require jquery
+//Requires jquery
 var input = document.querySelector('input');
 var inputForm = document.querySelector('form');
 var inputTxt = document.querySelector('.txt');
 var lastSent;
+
+//speech recognition stuff
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+
+
+/*
+Mic button stuff.
+*/
+var micBtn = document.querySelector('#micButton');
+
+function testSpeech() {
+  micBtn.disabled = true;
+  micBtn.textContent = 'Listening...';
+  var recognition = new SpeechRecognition();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.start();
+
+  recognition.onresult = function(event) {
+    console.log(event.results);
+
+    var speechResult = event.results[0][0].transcript;
+    inputTxt.value = speechResult;
+    console.log(speechResult);
+
+    console.log('Confidence: ' + event.results[0][0].confidence);
+  }
+
+  recognition.onspeechend = function() {
+    recognition.stop();
+    micBtn.disabled = false;
+    micBtn.textContent = 'Use your voice!';
+  }
+
+  recognition.onerror = function(event) {
+    micBtn.disabled = false;
+    micBtn.textContent = 'Start new test';
+    // diagnosticPara.textContent = 'Error occurred in recognition: ' + event.error;
+  }
+
+}
+
+micBtn.addEventListener('click', testSpeech);
+
+/*
+End mic button stuff
+*/
+
+
 
 inputForm.onsubmit = function(event) {
   $('.highlight').removeClass('highlight');
@@ -39,15 +92,6 @@ inputForm.onsubmit = function(event) {
     } else {
       // do nothing
     }
-    // event.preventDefault();
-    //TODO make it obvious what the user has done. Change the html to refect it.
     //TODO modial popup saying thanks.
 
   });
-
-  // $.getJSON("http://104.154.104.227:8000/parse?" + "callback=mycallback", {
-  // string: inputTxt.value,
-  // otherKey: 'otherValue'
-  // }, function(data){
-  //      // Handles the callback when the data returns
-  // });
