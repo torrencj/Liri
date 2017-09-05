@@ -64,6 +64,7 @@ inputForm.onsubmit = function(event) {
   lastSent = inputTxt.value;
   // console.log(event);
   inputTxt.blur();
+
   $.ajax({
     url:"http://104.154.104.227:8000/parse?s=" + inputTxt.value,
     method:"GET"
@@ -72,6 +73,8 @@ inputForm.onsubmit = function(event) {
     $('#suggestion').text(response.classification);
     $('#' + response.classification).addClass('highlight');
   });
+  $('#speechstring').text(inputTxt.value);
+  inputTxt.value = '';
 }
 
   $('.clickable').click(function(event) {

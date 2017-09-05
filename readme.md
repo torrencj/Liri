@@ -1,4 +1,4 @@
 # Liri
-First we need to train the classifier....
 
-Uses a node wrapper for NLTK. Might change.
+###What is Liri? (It's totally not a Siri ripoff or anything!)
+Liri takes natural written or spoken input to interact with Spotify, Twitter, OMDB, and Google.
