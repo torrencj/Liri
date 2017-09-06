@@ -66,7 +66,7 @@ inputForm.onsubmit = function(event) {
   inputTxt.blur();
 
   $.ajax({
-    url:"https://104.154.104.227/parse?s=" + inputTxt.value,
+    url:"https://104.154.104.227:8000/parse?s=" + inputTxt.value,
     method:"GET"
   }).done(function(response) {
     console.log(response.classification);
@@ -86,7 +86,7 @@ inputForm.onsubmit = function(event) {
       console.log(event.currentTarget.id);
       // inputTxt.blur();
       $.ajax({
-        url:"https://104.154.104.227/parse?s=" + lastSent + "&c=" + event.currentTarget.id,
+        url:"https://104.154.104.227:8000/parse?s=" + lastSent + "&c=" + event.currentTarget.id,
         method:"POST"
       }).done(function(response) {
         console.log(response);
