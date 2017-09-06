@@ -66,7 +66,7 @@ inputForm.onsubmit = function(event) {
   inputTxt.blur();
 
   $.ajax({
-    url:"http://104.154.104.227:8000/parse?s=" + inputTxt.value,
+    url:"https://104.154.104.227/parse?s=" + inputTxt.value,
     method:"GET"
   }).done(function(response) {
     console.log(response.classification);
