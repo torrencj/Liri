@@ -9,11 +9,32 @@ main {
   flex:1;
 }
 
-/*Make up some class that highlights the computer's pick*/
+#micButton {
+  /*height : 4rem;
+  width  : 4rem;
+  border-radius : 50%;*/
+}
+
+.active {
+  background-color: red;
+}
+
 .highlight {
   background: yellow;
 }
 
 .provider {
-  height: 140px;
+  height: 100px;
+}
+
+.hidden {
+  display: none;
+}
+
+.progress {
+  background-color: #29b6f6;
+}
+
+.progress .indeterminate {
+  background-color: #ff9800;
 }
