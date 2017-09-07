@@ -73,6 +73,7 @@ inputForm.onsubmit = function(event) {
     url:"https://104.154.104.227:8000/parse?s=" + inputTxt.value,
     method:"GET"
   }).done(function(response) {
+    console.log(response);
     console.log(response.classification);
     $('#suggestion').text(response.classification);
     $('#' + response.classification).addClass('highlight');
