@@ -31,10 +31,22 @@
     <div class="container">
       <br><br>
       <h1 class="header center orange-text">How it works</h1>
-      <div class="row center">
-        <!-- <h5 class="header col s12 light">Tell me what you'd like to do.</h5>
-        <h5 class="header col s12 light blue-text text-darken-12">(Let me know if I get it right!) ^_^</h5> -->
-        <!-- <h6>Not working? Click <a href="https://104.154.104.227:8000/">here</a> and click "yes I understand the risks". <a href="https://en.wikipedia.org/wiki/Self-signed_certificate">Why?</a></h6> -->
+      <div class="row">
+        <div class="col s6">
+          <ol>
+            <li>First, voice is done through <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API">the web speech API</a>.</li>
+            <li>Then, text is parsed with a node module called <a href="https://www.npmjs.com/package/natural">natural</a>.</li>
+            <li>User intent is determed with a <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes classifier.</a></li>
+            <li>Finally, the parsed text is sent to one of the APIs.</li>
+            <li>???</li>
+            <li>Siri ripoff!</li>
+          </ol>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s3">
+          <p>PS, this is really cool too: <a href="https://jasperproject.github.io/">Jasper</a></p>
+        </div>
       </div>
       <!-- <div class="row">
         <div class="">
