@@ -9,14 +9,16 @@ exports.search = function(string, callback) {
     if (err) {
       console.error(err)
     }
+    var links = [];
     for (var i = 0; i < 5; ++i) {
-      var link = res.links[i];
       // console.log(link.title +'\n' + link.href)
-      callback({
-        title: link.title,
-        href: link.href
-      });
-      // console.log(link.description + "\n")
+      var link = {
+        title: res.links[i].title,
+        href: res.links[i].href,
+        desc: res.links[i].description
+      }
+      links.push(link);
     }
+    callback(links)
   })
 }

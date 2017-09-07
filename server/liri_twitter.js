@@ -10,13 +10,14 @@ var client = new Twitter({
 
 exports.search = function(string, callback) {
   client.get('search/tweets', {q: 'donald trump'}, function(error, tweets, response) {
+
     var results = [];
-    //  console.log(tweets.statuses[0]); If I want all of them...tweets.statuses.length
      for (var i = 0; i < 10; i++) {
        results.push(
          {
            posted: tweets.statuses[i].created_at,
-           user: tweets.statuses[i].user.name,
+           userName: tweets.statuses[i].user.name,
+           userImg: tweets.statuses[i].user.profile_image_url_https,
            text: tweets.statuses[i].text
          }
        )}

@@ -32,7 +32,7 @@ var loadLiri = new Promise(function(resolve, reject) {
 
         liri.train();
         liri.save('liri.json', function(err, classifier) {
-            // the classifier is saved to the classifier.json file!
+            // the classifier is saved to the liri.json file!
         });
       }
     } else {
@@ -130,22 +130,24 @@ function parse(inputString, callback) {
       brillTag(inputString, function(result) {
       console.log(JSON.stringify(result));
       chunk(result, function(result) {
-        var thischunk;
-        chunkvalues = [];
-        //record tfidfs for each chunk
-        for (var i = 0; i < result.length; i++) {
-          thischunk = result[i].join(' ');
-          chunkvalues.push([thischunk, tfidf.tfidfs(thischunk)[0]]);
+        if (result) {
+          var thischunk;
+          chunkvalues = [];
+          //record tfidfs for each chunk
+          for (var i = 0; i < result.length; i++) {
+            thischunk = result[i].join(' ');
+            chunkvalues.push([thischunk, tfidf.tfidfs(thischunk)[0]]);
+          }
+          handleQuery(importance, chunkvalues, function(result) {
+            console.log(result);
+            console.log(chunkvalues);
+            console.log(inputString);
+            // if (result[0].length < 3) {
+            //   result[0] = inputString;
+            // }
+            callback(result)
+          });
         }
-        handleQuery(importance, chunkvalues, function(result) {
-          console.log(result);
-          console.log(chunkvalues);
-          console.log(inputString);
-          // if (result[0].length < 3) {
-          //   result[0] = inputString;
-          // }
-          callback(result)
-        });
       });
     });
   });
@@ -260,18 +262,15 @@ END Textparsing
 START Main Logic
 *************************************************************************************************/
 
-exports.runLiri = function (string, callback){
+var runLiri = function (string, callback){
   var results = [];
   loadLiri.then(liri => {
     results.push(liri.classify(string));
     parse(string, result => {
       results.push(result[0]);
       results.push(result[1]);
-      console.log(results[1]);
-      if (results[1].length < 3) {
-        results[0] = 'err';
-      }
-      console.log("FINAL: ");
+      // console.log(results[1]);
+      // console.log("FINAL: ");
       console.log(results);
       callback(results);
     })
@@ -281,36 +280,51 @@ exports.runLiri = function (string, callback){
 // var thisinput = process.argv.slice(2, process.argv.length);
 // thisinput = thisinput.join(' ');
 
-exports.main = function(thisinput) {
+exports.main = function(thisinput, callback) {
+  var final ={};
+  final.input = thisinput;
+
   if (thisinput) {
     runLiri(thisinput, liriResult => {
+      final.category = liriResult[0];
+      final.search = liriResult[1];
+
       switch (liriResult[0]) {
         case "google":
-          console.log("I'll search Google for " + liriResult[1]);
+          // console.log("I'll search Google for " + liriResult[1]);
           google.search(liriResult[1], result => {
             console.log(result);
+            final.result = result;
+            callback(final);
           });
         break;
         case "omdb":
-          console.log("I'll search OMDB for " + liriResult[1]);
+          // console.log("I'll search OMDB for " + liriResult[1]);
           omdb.search(liriResult[1], result => {
             if (result) {
               console.log(result);
+              final.result = result;
+              callback(final);
             } else {
               console.log("I didn't find anything...");
+              callback('err');
             }
           });
         break;
         case "spotify":
-          console.log("I'll search Spotify for " + liriResult[1]);
+          // console.log("I'll search Spotify for " + liriResult[1]);
           spotify.searchArtist(liriResult[1], result => {
             if (result.length > 0) {
               console.log(result);
+              final.result = result;
+              callback(final);
             }
             else {
               spotify.searchTracksByArtist(liriResult[1], result => {
                 if (result.length > 0) {
                   console.log(result);
+                  final.result = result;
+                  callback(final);
                 } else {
                   console.log("sorry, I couldn't find anything.");
                 }
@@ -320,22 +334,25 @@ exports.main = function(thisinput) {
           });
         break;
         case "twitter":
-          console.log("I'll search Twitter for " + liriResult[1]);
+          // console.log("I'll search Twitter for " + liriResult[1]);
           twitter.search(liriResult[1], result => {
             console.log(result);
+            final.result = result;
+            callback(final);
           });
         break;
         default:
         console.log("Sorry, I don't understand you.");
       }
+
+
     });
   } else {
-    console.log("psst, try entering something, jackass.");
+    // console.log("psst, try entering something, jackass.");
   }
 }
 
 // }
-
 
 
 /*************************************************************************************************
