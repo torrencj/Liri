@@ -16,12 +16,16 @@ Mic button stuff.
 var micBtn = document.querySelector('#micButton');
 
 function testSpeech() {
+
   micBtn.disabled = true;
   micBtn.textContent = 'Listening...';
   var recognition = new SpeechRecognition();
   recognition.lang = 'en-US';
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
+
+  // Init the browser's own Speech Recognition
+  // var recognition = new webkitSpeechRecognition();
 
   recognition.start();
 
