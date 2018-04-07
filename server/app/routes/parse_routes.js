@@ -27,7 +27,6 @@ module.exports = function(app, db) {
   //return tokens and classification
   app.get('/parse', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
-//    res.header("Access-Control-Allow-Origin", "localhost",  "https://torrencj.github.io");
     res.header("Access-Control-Allow-Origin", "*");
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
