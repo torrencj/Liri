@@ -89,12 +89,14 @@ inputForm.onsubmit = function(event) {
     if (lastSent) {
       console.log(lastSent);
       console.log(event.currentTarget.id);
-      $.ajax({
-        url:"https://104.154.104.227:8000/parse?s=" + lastSent + "&c=" + event.currentTarget.id,
-        method:"POST"
-      }).done(function(response) {
-        console.log(response);
-      });
+      //Not used for now.
+      //TODO
+      // $.ajax({
+      //   url:"https://us-central1-trans-grid-168913.cloudfunctions.net/liribot?s=" + lastSent + "&c=" + event.currentTarget.id,
+      //   method:"POST"
+      // }).done(function(response) {
+      //   console.log(response);
+      // });
       lastSent = '';
       Materialize.toast("Thanks! I'll get it right next time.", 4000)
     } else {
@@ -124,7 +126,9 @@ function handle(response) {
       $('#target').fadeIn();
 
     }else if (response.category == 'omdb') {
-      omdbGen(response.result.Poster, response.result.Title, response.result.imdbID)
+      for (var i = 0; i < response.result.length; i++) {
+        omdbGen(response.result[i].Poster, response.result[i].Title, response.result[i].imdbID)
+      }
     }else { //spotify
       spotifyGen(response.result["0"].uri);
     }
@@ -159,7 +163,7 @@ function omdbGen(posterURI, title, imdb) {
   if (posterURI == "N/A") {
     posterURI = 'http://via.placeholder.com/200x300?text=N/A';
   }
-  $('#target').html('<div class="card col s4 offset-s4"><div class="card-image"><img src='+posterURI
+  $('#target').append('<div class="card col s4"><div class="card-image"><img src='+posterURI
   +'></div><div class="card-content"><p>'+title+'</p></div><div class="card-action">'
   + '<a href="http://www.imdb.com/title/'+imdb+'/">View on IMDB</a></div></div>')
 }

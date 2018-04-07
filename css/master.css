@@ -9,6 +9,20 @@ main {
   flex:1;
 }
 
+.responsive-img img {
+  max-height: 100%;
+  max-width: 200px;
+}
+
+.card img {
+  max-height: 315px;
+  margin-top: 12px;
+}
+
+.card {
+  padding:12px;
+}
+
 #micButton {
   /*height : 4rem;
   width  : 4rem;
