@@ -69,7 +69,7 @@ inputForm.onsubmit = function(event) {
   lastSent = inputTxt.value;
   inputTxt.blur();
   $.ajax({
-    url:"https://us-central1-trans-grid-168913.cloudfunctions.net/liribot?S=" + inputTxt.value,
+    url:"https://us-central1-trans-grid-168913.cloudfunctions.net/liribot?s=" + inputTxt.value,
     // url:"https://104.154.104.227:8000/parse?s=" + inputTxt.value,
     method:"GET"
   }).done(function(response) {
